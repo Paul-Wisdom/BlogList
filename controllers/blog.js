@@ -44,7 +44,7 @@ blogRouter.put('/:blogId',userExtractor, async (request, response) => {
         request.body.likes = 0;
     }
     const newLikes = request.body.likes;
-    const result = await Blog.findOneAndUpdate({_id: id, userId: userId}, {likes: newLikes}, {new: true, runValidators: true, context: 'query'})
+    const result = await Blog.findOneAndUpdate({_id: id, userId: userId}, {likes: newLikes}, {new: true, runValidators: true, context: 'query'}).populate('userId')
     // const result = await Blog.findByIdAndUpdate(id, {likes: newLikes}, {new: true, runValidators: true, context: 'query'});
     if(!result)
     {

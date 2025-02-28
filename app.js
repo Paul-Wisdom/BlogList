@@ -14,7 +14,7 @@ const logger = require('./utils/logger');
 const middlewares = require('./utils/middleware');
 
 logger.info("connecting to", mongoUrl)
-mongoose.connect(mongoUrl).then(result => { logger.info('successful connection')}).catch(err => {
+mongoose.connect(mongoUrl).then(result => {logger.info('successful connection')}).catch(err => {
   logger.error('error connecting to db', err.message)
 })
 
