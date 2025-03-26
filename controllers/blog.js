@@ -44,12 +44,12 @@ blogRouter.put('/:blogId',userExtractor, async (request, response) => {
         request.body.likes = 0;
     }
     const newLikes = request.body.likes;
-    const result = await Blog.findOneAndUpdate({_id: id, userId: userId}, {likes: newLikes}, {new: true, runValidators: true, context: 'query'}).populate('userId')
+    const result = await Blog.findOneAndUpdate({_id: id}, {likes: newLikes}, {new: true, runValidators: true, context: 'query'}).populate('userId')
     // const result = await Blog.findByIdAndUpdate(id, {likes: newLikes}, {new: true, runValidators: true, context: 'query'});
-    if(!result)
-    {
-        return response.status(401).send({message: "User does not have access to this blog"});
-    }
+    // if(!result)
+    // {
+    //     return response.status(401).send({message: "User does not have access to this blog"});
+    // }
     return response.status(200).json(result);
 })
 

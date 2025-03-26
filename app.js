@@ -12,6 +12,7 @@ const loginRouter = require('./controllers/login');
 const {mongoUrl} = require('./utils/config');
 const logger = require('./utils/logger');
 const middlewares = require('./utils/middleware');
+const resetRouter = require('./controllers/reset');
 
 logger.info("connecting to", mongoUrl)
 mongoose.connect(mongoUrl).then(result => {logger.info('successful connection')}).catch(err => {
@@ -32,6 +33,9 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :d
 app.use('/api/blogs', blogRouter);
 app.use('/api/users', userRouter);
 app.use('/api/login', loginRouter);
+if(process.env.NODE_ENV === 'test') {
+  app.use('/api/reset', resetRouter);
+}
 //add unknownRoute, errorhandler and requestlogger i.e morgan middleware
 app.use(middlewares.unknownEndPoint);
 app.use(middlewares.errorHandler);
