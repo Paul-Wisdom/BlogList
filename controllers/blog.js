@@ -23,6 +23,21 @@ blogRouter.post('/', userExtractor, async (request, response) => {
     return response.status(201).json(result)
 })
 
+blogRouter.put('/comment/:blogId', userExtractor, async (request, response) => {
+    const id = request.params.blogId;
+    const newComment = request.body.comment
+    if(!newComment || newComment === ''){
+        return response.status(400).send({error: "No comment in request body"})
+    }
+    const blog = await Blog.findById(id)
+    if(!blog){
+        return response.status(404).send({error: "Blog not found"})
+    }
+    const newComments = blog.comments.concat(newComment)
+    blog.comments = newComments
+    const result = await blog.save()
+    return response.status(201).json(result)
+})
 
 //deleting blogs
 blogRouter.delete('/:blogId', userExtractor, async (request, response, next) => {
